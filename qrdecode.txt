@@ -1,0 +1,26 @@
+
+import zbar
+from PIL import Image
+
+
+scanner = zbar.ImageScanner()
+
+scanner.parse_config('enable')
+
+
+img = Image.open('<你的?片路?>').convert('L')
+
+width, height = img.size
+
+
+qrCode = zbar.Image(width, height, 'Y800', img.tobytes())
+scanner.scan(qrCode)
+
+data = ''
+for s in qrCode:
+    data += s.data
+
+
+del img
+
+print data
